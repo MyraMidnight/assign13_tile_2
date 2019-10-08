@@ -77,64 +77,61 @@ def travelSouth(x, y):
 		y -= 1
 		return [x,y]
 
-def coin_lever(position, coins):
+def coin_lever(position, coin_count):
   """Check if there is a lever in current location, adds to coin coint if pulled"""
   lever_locations = [[1,2], [2,2], [2,3], [3,2]]
   if position in lever_locations:
     pull_lever = input('Pull a lever (y/n): ').lower()
-    if pull_lever == 'y':
-      coins = coins + 1
-      print("You received 1 coin, your total is now {}.".format(str(coins)))
-      return coins
-    else:
-      return coins
+    if pull_lever == 'y':   
+      coin_count += 1
+      print("You received 1 coin, your total is now {}.".format(coin_count))
+      return coin_count
+  return coin_count
+
 
 def main():
   game_loop = True  
-  coin_count = 0  
+  coin_count = 0
   while game_loop:
 
-    current_coins = coin_lever(user_pos, coin_count)
-    coin_count = current_coins
+    
     if user_pos[0] == 3 and user_pos[1] == 1:
       #quits game if player wins.
-      print("Victory!")
+      print("Victory! Total coins {}.".format(coin_count))
+
       game_loop = False
     else:
       #else checks for available directions.
       N,W,E,S = checkPos(user_pos[0], user_pos[1])
-      
+      coin_count = coin_lever(user_pos, coin_count)
 
-      if prev_pos[0] == user_pos[0] and prev_pos[1] == user_pos[1]:
-        #Doesn't print available directions if move failed
-        pass
 
-      else:
-        #Prints available directions
-        if N == 1 and S == 1 and W == 1:
-          print("You can travel: (N)orth or (W)est or (S)outh.")
-        elif N == 1 and S == 1 and E == 1:
-          print("You can travel: (N)orth or (E)ast or (S)outh.")
-        elif S == 1 and W == 1 and E == 1:
-          print("You can travel: (E)ast or (W)est or (S)outh.")
-        elif N == 1 and S == 1:
-          print("You can travel: (N)orth or (S)outh.")
-        elif N == 1 and W == 1:
-          print("You can travel: (N)orth or (W)est.")
-        elif N == 1 and E == 1:
-          print("You can travel: (N)orth or (E)ast.")
-        elif E == 1 and W == 1:
-          print("You can travel: (E)ast or (W)est.")
-        elif S == 1 and E == 1:
-          print("You can travel: (E)ast or (S)outh.")
-        elif S == 1 and W == 1:
-          print("You can travel: (S)outh or (W)est.")
-        elif N == 1:
-          print("You can travel: (N)orth.")
 
-        # Updates postions, change this
-        prev_pos[0] = user_pos[0]
-        prev_pos[1] = user_pos[1]
+      #Prints available directions
+      if N == 1 and S == 1 and W == 1:
+        print("You can travel: (N)orth or (W)est or (S)outh.")
+      elif N == 1 and S == 1 and E == 1:
+        print("You can travel: (N)orth or (E)ast or (S)outh.")
+      elif S == 1 and W == 1 and E == 1:
+        print("You can travel: (E)ast or (W)est or (S)outh.")
+      elif N == 1 and S == 1:
+        print("You can travel: (N)orth or (S)outh.")
+      elif N == 1 and W == 1:
+        print("You can travel: (N)orth or (W)est.")
+      elif N == 1 and E == 1:
+        print("You can travel: (N)orth or (E)ast.")
+      elif E == 1 and W == 1:
+        print("You can travel: (E)ast or (W)est.")
+      elif S == 1 and E == 1:
+        print("You can travel: (E)ast or (S)outh.")
+      elif S == 1 and W == 1:
+        print("You can travel: (S)outh or (W)est.")
+      elif N == 1:
+        print("You can travel: (N)orth.")
+
+      # Updates postions, change this
+      prev_pos[0] = user_pos[0]
+      prev_pos[1] = user_pos[1]
 
 
       direct = input("Direction: ").lower()
