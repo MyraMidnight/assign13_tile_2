@@ -1,6 +1,4 @@
-user_pos = [1,1]
-prev_pos = [0,0]
-victory_pos = [3,1]
+
 def checkPos(x, y):
 	"""Checks for possible directions for output."""
 	N = 1
@@ -89,16 +87,18 @@ def coin_lever(position, coin_count):
   return coin_count
 
 
-def main():
+def play():
   game_loop = True  
   coin_count = 0
+  user_pos = [1,1]
+  prev_pos = [0,0]
+  victory_pos = [3,1]
   while game_loop:
 
     
     if user_pos[0] == 3 and user_pos[1] == 1:
       #quits game if player wins.
       print("Victory! Total coins {}.".format(coin_count))
-
       game_loop = False
     else:
       #else checks for available directions.
@@ -149,6 +149,9 @@ def main():
 
       elif direct == "w":
         user_pos[0], user_pos[1] = travelWest(user_pos[0], user_pos[1])
-
+  
+  play_continue = input("Play again (y/n): ").lower()
+  if play_continue == "y":
+  	play()
     
-main()
+play()
