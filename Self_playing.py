@@ -1,39 +1,43 @@
 import random
-
 init_seed = int(input("Input seed: "))
 random.seed(init_seed)
 
 
 
-def checkPos(x, y):
-    """Checks for possible directions for output."""
-    N = 1
-    W = 1
-    E = 1
-    S = 1
+def checkPos(position):
+  """Checks user current position and tells them available directions"""
+  # positions are: [Col, Row], user starts in bottom left corner.
+  # the directions are [N,W,E,S]
+  available_dir = []
+  if position == [1,1]:
+    available_dir = [True, False, False, False]
+  elif position == [1,2]:
+    available_dir = [True, True, False, True]
+  elif position == [1,3]:
+    available_dir = [False, True, False, True]
+  elif position == [2,1]:
+    available_dir = [True, False, False, False]
+  elif position == [2,2]:
+    available_dir = [False, False, True, True]
+  elif position == [2,3]:
+    available_dir = [False, True, True, False]
+  elif position == [3,1]:
+    available_dir = [True, False, False, False]
+  elif position == [3,2]:
+    available_dir = [True, False, False, True]
+  elif position == [3,3]:
+    available_dir = [False, False, True, True]
 
-    if x == 2 and y != 3:
-        E = 0
-    if x == 2 and y == 1:
-        W = 0
-    if x == 2 and y == 2:
-        N = 0
-    if x == 2 and y == 3:
-        S = 0
-    if x == 3 and y != 3:
-        W = 0
-    if x == 1 and y == 1:
-        W,E,S = 0,0,0
-    if x == 1:
-        W = 0
-    if y == 1:
-        S = 0
-    if y == 3:
-        N = 0
-    if x == 3:
-        E = 0
-    return N,W,E,S
+  #create a list of directions for print
+  directions = ['(N)orth', '(W)est', '(E)ast','(S)outh']
+  string_directions = []
+  for i in range(4):
+    if available_dir[i] == True:
+      string_directions.append(directions[i])
 
+  #return the directions
+  return [available_dir, string_directions]
+     
 def travelNorth(x, y):
     if y == 3:
         invalid_direction()
@@ -132,33 +136,18 @@ def play():
       game_loop = False
     else:
       #else checks for available directions.
-      N,W,E,S = checkPos(user_pos[0], user_pos[1])
-      
+      directions = ['(N)orth', '(W)est', '(E)ast','(S)outh']
+      available_directions = checkPos(user_pos)
+      #check if
+      for i in range(4):
+        if available_directions[i] == True:
+          directions_string += 
 
       if prev_pos != user_pos:
         coin_count = coin_lever(user_pos, coin_count)
-
+      
       #Prints available directions
-      if N == 1 and S == 1 and W == 1:
-        print("You can travel: (N)orth or (W)est or (S)outh.")
-      elif N == 1 and S == 1 and E == 1:
-        print("You can travel: (N)orth or (E)ast or (S)outh.")
-      elif S == 1 and W == 1 and E == 1:
-        print("You can travel: (E)ast or (W)est or (S)outh.")
-      elif N == 1 and S == 1:
-        print("You can travel: (N)orth or (S)outh.")
-      elif N == 1 and W == 1:
-        print("You can travel: (N)orth or (W)est.")
-      elif N == 1 and E == 1:
-        print("You can travel: (N)orth or (E)ast.")
-      elif E == 1 and W == 1:
-        print("You can travel: (E)ast or (W)est.")
-      elif S == 1 and E == 1:
-        print("You can travel: (E)ast or (S)outh.")
-      elif S == 1 and W == 1:
-        print("You can travel: (S)outh or (W)est.")
-      elif N == 1:
-        print("You can travel: (N)orth.")
+      print(' or '.join(available_directions[1]))
 
       # Updates postions
       prev_pos[0] = user_pos[0]
